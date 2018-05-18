@@ -1,0 +1,55 @@
+<h1>Payment Details</h1>
+
+<p>This page submits payment details to the server for processing.</p>
+
+<form #paymentsForm="ngForm" (ngSubmit)="onSubmit(paymentsForm)">
+    <table class="table">
+        <tr>
+            <td>BSB</td>
+            <td>
+                <input type="number" [(ngModel)]="paymentDetails.bsb" name="bsb" #bsb="ngModel" required pattern="^[0-9]{6,6}$">
+                <div *ngIf="submitted && bsb.errors?.required"
+                     class="alert alert-danger">
+                    BSB required.
+                </div>
+                <div *ngIf="submitted && bsb.errors?.pattern"
+                     class="alert alert-danger">
+                    BSB has to be 6 digits.
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Account Number</td>
+            <td>
+                <input type="number" [(ngModel)]="paymentDetails.accountNumber" name="accountNumber" required #accountNumber="ngModel">
+                <div *ngIf="submitted && accountNumber.errors?.required"
+                     class="alert alert-danger">
+                    Account number required.
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Account Name</td>
+            <td>
+                <input type="text" [(ngModel)]="paymentDetails.accountName" name="accountName" required #accountName="ngModel">
+                <div *ngIf="submitted && accountName.errors?.required"
+                     class="alert alert-danger">
+                    Account name required.
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>Payment Amount</td>
+            <td>
+                <input type="number" [ngModel]="paymentDetails.paymentAmount | number : '1.2-2'" (ngModelChange)="paymentDetails.paymentAmount = $event" name="paymentAmount" required #paymentAmount="ngModel">
+                <div *ngIf="submitted && paymentAmount.errors?.required"
+                     class="alert alert-danger">
+                    Payment amount required.
+                </div>
+            </td>
+        </tr>
+        <tr><td>Reference</td><td><input type="text" [(ngModel)]="paymentDetails.reference" name="reference"></td></tr>
+    </table>
+
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>
