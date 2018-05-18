@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AgencyService
 {
-    public class Class1
+    public class AgencyService
     {
     }
 }
