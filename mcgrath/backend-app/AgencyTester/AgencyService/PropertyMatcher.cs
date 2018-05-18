@@ -12,6 +12,9 @@ namespace AgencyService
     {
         public bool IsMatch(Property agencyProperty, Property databaseProperty)
         {
+            if (agencyProperty == null || databaseProperty == null)
+                return false;
+
             switch (agencyProperty.AgencyCode.ToUpperInvariant())
             {
                 case "OTBRE":
@@ -25,6 +28,10 @@ namespace AgencyService
                         return a.Count() ==
                             cleanedAgencyPropertyNameArray.Count();
                     }
+                case "LRE":
+                {
+
+                }
                 case "CRE":
                     {
                         var agencyPropertyName = GetStringArray(agencyProperty.Name).Reverse().ToList();
