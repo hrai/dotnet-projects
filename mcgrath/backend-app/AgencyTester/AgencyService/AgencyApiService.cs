@@ -21,7 +21,7 @@ namespace AgencyService
                 AgencyCode = "OTBRE",
                 Address = "32 Sir John Young Crescent, Sydney NSW",
                 Name = "Super High Apartment Sydney",
-                Latitude = 23,
+                Latitude = 23.001m,
                 Longitude = 34,
             };
             return validProperty;

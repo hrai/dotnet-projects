@@ -4,7 +4,7 @@
     ViewBag.Title = "Home Page";
 }
 
-@using (Html.BeginForm("Submit", "Home", FormMethod.Post))
+@using (Html.BeginForm("Submit", "Home", FormMethod.Post, new { id = "agencyForm" }))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Name)

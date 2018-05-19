@@ -11,14 +11,15 @@ namespace AgencyTester.Controllers
     {
         private IPropertyMatcher _propertyMatcher;
 
-        public HomeController(IPropertyMatcher propertyMatcher)
+        public HomeController()
         {
-            _propertyMatcher = propertyMatcher;
+            _propertyMatcher = new PropertyMatcher();
         }
 
         public ActionResult Index()
         {
-            return View();
+            var model = AgencyApiService.GetValidPropertyForOtbreAgency();
+            return View(model);
         }
 
         [HttpPost]
