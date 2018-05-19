@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using FluentAssertions;
-using FluentAssertions.Common;
 
 namespace AgencyService.UnitTests
 {
@@ -107,11 +101,92 @@ namespace AgencyService.UnitTests
             {
                 AgencyCode = "CRE",
                 Address = "32 Sir John Young Crescent, Sydney NSW",
-                Name = "The Summit  Apartments",
+                Name = "The Summit Apartments",
                 Latitude = 23,
                 Longitude = 34,
             };
             return validProperty;
+        }
+
+        private Property GetValidPropertyFromLreAgency()
+        {
+            var validProperty = new Property
+            {
+                AgencyCode = "LRE",
+                Address = "32 Sir John Young Crescent, Sydney NSW",
+                Name = "The Summit Apartments",
+                Latitude = 23.02m,
+                Longitude = 34,
+            };
+            return validProperty;
+        }
+
+        [Test]
+        public void Lre_IsMatch_ReturnsTrue_WhenLatitudeLocationIsWithinRange()
+        {
+            var validProperty = GetValidPropertyFromLreAgency();
+
+            var validPropertyWithMessyDetails = new Property
+            {
+                AgencyCode = "LRE",
+                Address = "32 Sir John Young Crescent, Sydney NSW",
+                Name = "Apartments Summit The",
+                Latitude = 23.019m,
+                Longitude = 34.001m,
+            };
+
+            _propertyMatcher.IsMatch(validProperty, validPropertyWithMessyDetails).Should().BeTrue();
+        }
+
+        [Test]
+        public void Lre_IsMatch_ReturnsTrue_WhenLongitudeLocationIsWithinRange()
+        {
+            var validProperty = GetValidPropertyFromLreAgency();
+
+            var validPropertyWithMessyDetails = new Property
+            {
+                AgencyCode = "LRE",
+                Address = "32 Sir John Young Crescent, Sydney NSW",
+                Name = "Apartments Summit The",
+                Latitude = 23.019m,
+                Longitude = 34.001m,
+            };
+
+            _propertyMatcher.IsMatch(validProperty, validPropertyWithMessyDetails).Should().BeTrue();
+        }
+
+        [Test]
+        public void Lre_IsMatch_ReturnsFalse_WhenLatitudeLocationIsOutsideRange()
+        {
+            var validProperty = GetValidPropertyFromLreAgency();
+
+            var validPropertyWithMessyDetails = new Property
+            {
+                AgencyCode = "LRE",
+                Address = "32 Sir John Young Crescent, Sydney NSW",
+                Name = "Apartments Summit The",
+                Latitude = 35,
+                Longitude = 23.019m,
+            };
+
+            _propertyMatcher.IsMatch(validProperty, validPropertyWithMessyDetails).Should().BeFalse();
+        }
+
+        [Test]
+        public void Lre_IsMatch_ReturnsFalse_WhenLongitudeLocationIsOutsideRange()
+        {
+            var validProperty = GetValidPropertyFromLreAgency();
+
+            var validPropertyWithMessyDetails = new Property
+            {
+                AgencyCode = "LRE",
+                Address = "32 Sir John Young Crescent, Sydney NSW",
+                Name = "Apartments Summit The",
+                Latitude = 23.019m,
+                Longitude = 39.019m,
+            };
+
+            _propertyMatcher.IsMatch(validProperty, validPropertyWithMessyDetails).Should().BeFalse();
         }
     }
 }

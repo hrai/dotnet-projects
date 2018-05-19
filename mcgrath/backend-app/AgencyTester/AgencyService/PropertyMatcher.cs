@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Messaging;
 using System.Text.RegularExpressions;
 
 namespace AgencyService
@@ -25,12 +22,20 @@ namespace AgencyService
                         var cleanedAgencyPropertyNameArray = GetStringArray(cleanedAgencyPropertyName);
 
                         var a = cleanedAgencyPropertyNameArray.Intersect(GetStringArray(cleanedDatabasePropertyName)).ToList();
-                        return a.Count() ==
-                            cleanedAgencyPropertyNameArray.Count();
+                        return a.Count() == cleanedAgencyPropertyNameArray.Count();
                     }
                 case "LRE":
                 {
+                    var latitudeDifference = agencyProperty.Latitude - databaseProperty.Latitude;
+                    var longitudeDifference = agencyProperty.Longitude - databaseProperty.Longitude;
 
+                    if (ConvertDegreesToMetres(latitudeDifference) > 200)
+                        return false;
+
+                    if (ConvertDegreesToMetres(longitudeDifference) > 200)
+                        return false;
+
+                    return true;
                 }
                 case "CRE":
                     {
@@ -41,6 +46,11 @@ namespace AgencyService
                     return false;
 
             }
+        }
+
+        private decimal ConvertDegreesToMetres(decimal degree)
+        {
+            return Math.Abs(degree) * 111 * 1000;
         }
 
         private IEnumerable<string> GetStringArray(string stringToSplit)
