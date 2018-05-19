@@ -17,7 +17,7 @@ namespace AgencyService.UnitTests
         [Test]
         public void Otbre_IsMatch_ReturnsTrue_WhenNameMatches()
         {
-            var validProperty = GetValidPropertyForOtbreAgency();
+            var validProperty = AgencyApiService.GetValidPropertyForOtbreAgency();
 
             var validPropertyWithMessyDetails = new Property
             {
@@ -34,7 +34,7 @@ namespace AgencyService.UnitTests
         [Test]
         public void Otbre_IsMatch_ReturnsFalse_WhenNameDoesntMatch()
         {
-            var validProperty = GetValidPropertyForOtbreAgency();
+            var validProperty = AgencyApiService.GetValidPropertyForOtbreAgency();
 
             var validPropertyWithMessyDetails = new Property
             {
@@ -48,23 +48,10 @@ namespace AgencyService.UnitTests
             _propertyMatcher.IsMatch(validProperty, validPropertyWithMessyDetails).Should().BeFalse();
         }
 
-        private static Property GetValidPropertyForOtbreAgency()
-        {
-            var validProperty = new Property
-            {
-                AgencyCode = "OTBRE",
-                Address = "32 Sir John Young Crescent, Sydney NSW",
-                Name = "Super High Apartment Sydney",
-                Latitude = 23,
-                Longitude = 34,
-            };
-            return validProperty;
-        }
-
         [Test]
         public void Cre_IsMatch_ReturnsTrue_WhenNameMatches()
         {
-            var validProperty = GetValidPropertyFromCreAgency();
+            var validProperty = AgencyApiService.GetValidPropertyFromCreAgency();
 
             var validPropertyWithMessyDetails = new Property
             {
@@ -81,7 +68,7 @@ namespace AgencyService.UnitTests
         [Test]
         public void Cre_IsMatch_ReturnsFalse_WhenNameDoesntMatches()
         {
-            var validProperty = GetValidPropertyFromCreAgency();
+            var validProperty = AgencyApiService.GetValidPropertyFromCreAgency();
 
             var invalidPropertyWithMessyDetails = new Property
             {
@@ -95,36 +82,10 @@ namespace AgencyService.UnitTests
             _propertyMatcher.IsMatch(validProperty, invalidPropertyWithMessyDetails).Should().BeFalse();
         }
 
-        private Property GetValidPropertyFromCreAgency()
-        {
-            var validProperty = new Property
-            {
-                AgencyCode = "CRE",
-                Address = "32 Sir John Young Crescent, Sydney NSW",
-                Name = "The Summit Apartments",
-                Latitude = 23,
-                Longitude = 34,
-            };
-            return validProperty;
-        }
-
-        private Property GetValidPropertyFromLreAgency()
-        {
-            var validProperty = new Property
-            {
-                AgencyCode = "LRE",
-                Address = "32 Sir John Young Crescent, Sydney NSW",
-                Name = "The Summit Apartments",
-                Latitude = 23.02m,
-                Longitude = 34,
-            };
-            return validProperty;
-        }
-
         [Test]
         public void Lre_IsMatch_ReturnsTrue_WhenLatitudeLocationIsWithinRange()
         {
-            var validProperty = GetValidPropertyFromLreAgency();
+            var validProperty = AgencyApiService.GetValidPropertyFromLreAgency();
 
             var validPropertyWithMessyDetails = new Property
             {
@@ -141,7 +102,7 @@ namespace AgencyService.UnitTests
         [Test]
         public void Lre_IsMatch_ReturnsTrue_WhenLongitudeLocationIsWithinRange()
         {
-            var validProperty = GetValidPropertyFromLreAgency();
+            var validProperty = AgencyApiService.GetValidPropertyFromLreAgency();
 
             var validPropertyWithMessyDetails = new Property
             {
@@ -158,7 +119,7 @@ namespace AgencyService.UnitTests
         [Test]
         public void Lre_IsMatch_ReturnsFalse_WhenLatitudeLocationIsOutsideRange()
         {
-            var validProperty = GetValidPropertyFromLreAgency();
+            var validProperty = AgencyApiService.GetValidPropertyFromLreAgency();
 
             var validPropertyWithMessyDetails = new Property
             {
@@ -175,7 +136,7 @@ namespace AgencyService.UnitTests
         [Test]
         public void Lre_IsMatch_ReturnsFalse_WhenLongitudeLocationIsOutsideRange()
         {
-            var validProperty = GetValidPropertyFromLreAgency();
+            var validProperty = AgencyApiService.GetValidPropertyFromLreAgency();
 
             var validPropertyWithMessyDetails = new Property
             {

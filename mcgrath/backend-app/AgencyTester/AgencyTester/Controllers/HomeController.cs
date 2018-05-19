@@ -3,28 +3,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AgencyService;
 
 namespace AgencyTester.Controllers
 {
     public class HomeController : Controller
     {
+        private IPropertyMatcher _propertyMatcher;
+
+        public HomeController(IPropertyMatcher propertyMatcher)
+        {
+            _propertyMatcher = propertyMatcher;
+        }
+
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        [HttpPost]
+        public string Submit(Property agencyProperty)
         {
-            ViewBag.Message = "Your application description page.";
+            if (string.IsNullOrWhiteSpace(agencyProperty.Name) ||
+                string.IsNullOrWhiteSpace(agencyProperty.Address) ||
+                string.IsNullOrWhiteSpace(agencyProperty.AgencyCode))
+                return "Invalid input";
 
-            return View();
+            var databaseProperties = AgencyApiService.GetDatabaseProperties();
+            if (databaseProperties.Any(databaseProperty => _propertyMatcher.IsMatch(agencyProperty, databaseProperty)))
+            {
+                return "A match was found";
+            }
+
+            return "No match was found";
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }
