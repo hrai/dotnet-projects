@@ -15,6 +15,20 @@ namespace Fancy.Domain.UnitTests
             _fancyService = new FancyService();
         }
 
+        [Test]
+        public void Get_Me_This()
+        {
+            //Arrange
+            blah
+
+            //Act
+
+
+            //Assert
+
+
+        }
+
         [TestCase(0, 0)]
         [TestCase(2, 1)]
         [TestCase(10, 55)]
